@@ -54,6 +54,11 @@
           <Tree id="tree3" />
         </v-col>
       </v-row>
+      <v-container>
+        <v-row>
+          <v-col md="6"><TeamCard /></v-col>
+        </v-row>
+      </v-container>
       <div v-if="this.user.applicationStatus === 7">
         <MentorList />
         <v-row>
@@ -95,6 +100,7 @@ import grassbottom from "./grassbottom.svg.vue";
 import footertop from "./footertop.svg.vue";
 import MentorList from "./MentorList.vue";
 import Schedule from "./Schedule.vue";
+import TeamCard from "./TeamCard.vue";
 import SlackChannels from "./SlackChannels.vue";
 import Challenges from "./Challenges.vue";
 
@@ -108,6 +114,7 @@ export default {
     footertop,
     MentorList,
     Schedule,
+    TeamCard,
     SlackChannels,
     Challenges,
     Timeline
