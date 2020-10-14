@@ -112,6 +112,14 @@ const routes = [
       requiresAuth: false
     }
   },
+  {
+    path: "/teamcard",
+    name: "teamcard",
+    component: () => import("@/views/TeamCardTest.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
   // PLEASE MAKE SURE THAT THIS IS ALWAYS THE LAST ROUTE!!!
   {
     path: "*",

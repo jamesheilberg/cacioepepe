@@ -6,15 +6,29 @@
     <v-card-text>
       <v-container>
         <v-row>
-          <v-col cols="12">
-            <v-text-field label="Team Name" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field label="Team Desciption" required></v-text-field>
-          </v-col>
-          <v-btn color="primary">
-            Submit
-          </v-btn>
+          <v-form v-model="valid" @submit.prevent="createTeam">
+            <v-col cols="12">
+              <v-text-field
+                label="Team Name"
+                v-model="teamName"
+                :rules="nameRules"
+                required
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Team Desciption"
+                v-model="teamDescription"
+                :rules="descRules"
+                required
+              >
+              </v-text-field>
+            </v-col>
+            <v-btn type="submit" :disabled="!valid" color="primary">
+              Submit
+            </v-btn>
+          </v-form>
         </v-row>
       </v-container>
     </v-card-text>
@@ -22,7 +36,44 @@
 </template>
 
 <script>
-export default {};
+import { db } from "@/firebase/init.js";
+
+export default {
+  name: "MakeTeam",
+  data: function() {
+    return {
+      teamName: "",
+      nameRules: [v => !!v || "Name is required"],
+      teamDescription: "",
+      descRules: [v => !!v || "Description is required"],
+      valid: false
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    createTeam() {
+      // create a new team
+      // set user to his appropriate team
+      // update user store
+      db.collection("teams")
+        .add({
+          teamName: this.teamName,
+          teamDescription: this.teamDescription,
+          teamMembers: [db.collection("users").doc(this.user.uid)],
+          teamInvites: []
+        })
+        .then(data => {
+          console.log(data);
+        });
+
+      console.log(this.user);
+    }
+  }
+};
 </script>
 
 <style></style>
