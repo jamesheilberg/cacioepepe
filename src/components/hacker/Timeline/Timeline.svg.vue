@@ -11,55 +11,45 @@
         stroke-width="0"
       />
 
-      <line x1="12" y1="50" x2="188" y2="50" stroke="#aaa" stroke-width="4" />
+      <!-- <line x1="12" y1="50" x2="188" y2="50" stroke="#aaa" stroke-width="4" /> -->
 
       <path
-        d="M12 50 L56 50 L75 15 L100 15"
+        :d="this.stages[this.applicationStatus].path"
+        :stroke="this.stages[this.applicationStatus].color"
+        fill="none"
+        stroke-width="4"
+      />
+
+      <path
+        v-for="(path, index) in paths"
+        :key="index"
         fill="none"
         stroke="#aaa"
         stroke-width="4"
-        stroke-dasharray="108.82461547851562"
-      />
-
-      <path
-        d="M12 50 L100 50 L122 15 L144 15"
-        fill="none"
-        stroke="#aaa"
-        stroke-width="4"
-        id="hotpink"
-        stroke-dasharray="151.34005737304688"
+        :d="path.d"
+        :id="index"
       />
       <path
-        d="M12 50 L56 50 L75 85 L100 85"
+        :d="paths[this.applicationStatus].d"
+        :stroke="paths[this.applicationStatus].fill"
+        stroke-width="4"
         fill="none"
-        stroke="#aaa"
-        stroke-width="4"
-        id="cyan"
-        stroke-dasharray="108.82461547851562"
-      />
-      <path
-        d="M12 50 L56 50 L56 50 L56 50"
-        fill="none"
-        stroke="#aaa"
-        stroke-width="4"
-        id="orange"
-      />
-
-      <line
-        x1="12"
-        y1="50"
-        x2="188"
-        y2="50"
-        stroke="#aaa"
-        stroke-width="4"
-        stroke-dasharray="176"
-        :stroke-dashoffset="176 - stages[currentStage].column * 44"
-        class="fancyLine"
-      />
-
+        :stroke-dasharray="paths[this.applicationStatus].length"
+        :stroke-dashoffset="paths[this.applicationStatus].length"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          :values="
+            `${paths[this.applicationStatus].length};${
+              paths[this.applicationStatus].length
+            };0`
+          "
+          dur="1s"
+          begin="1s"
+          fill="freeze"
+        />
+      </path>
       <TextElements />
-      <!-- <circle r="10" fill="red" cx="10" cy="10" /> -->
-
       <Started
         :applicationStatus="applicationStatus"
         transform="translate(2, 40)"
@@ -75,6 +65,7 @@
       <CheckedIn transform="translate(178,40)" />
       <Waitlisted transform="translate(90, 75)" />
     </svg>
+    <button v-on:click="getLengths()">get lengths</button>
   </div>
 </template>
 
@@ -103,6 +94,7 @@ const allStages = {
 export default {
   data() {
     return {
+      allStages: allStages,
       message: "Welcome, Boo!",
       currentStage: allStages.STARTED,
       stages: [
@@ -123,7 +115,7 @@ export default {
         },
         {
           title: "Accepted",
-          color: "lightblue",
+          color: "blue",
           column: 2,
           path: "M12 50 L100 50 L100 50 L100 50",
           length: 88
@@ -156,13 +148,58 @@ export default {
           column: 3,
           vertical: -35
         }
+      ],
+      paths: [
+        {
+          //started (placeholder so array operations line up)
+          d: "M12 50",
+          length: 0,
+          fill: "#FFF"
+        },
+        {
+          //submitted
+          d: "M12 50 L56 50",
+          length: 44,
+          fill: "goldenrod"
+        },
+        {
+          //accepted
+          d: "M12 50 L100 50",
+          length: 88,
+          fill: "#FFF"
+        },
+        {
+          //rejected
+          d: "M12 50 L56 50 L75 15 L100 15",
+          length: 108.82461547851562,
+          fill: "pink"
+        },
+        {
+          //waitlisted
+          d: "M12 50 L56 50 L75 85 L100 85",
+          length: 108.82461547851562,
+          fill: "#FFF"
+        },
+        {
+          //confirmed
+          d: "M12 50 L144 50",
+          length: 132,
+          fill: "#FFF"
+        },
+        {
+          //declined
+          d: "M12 50 L100 50 L122 15 L144 15",
+          length: 151.3400573704688,
+          fill: "#FFF"
+        },
+        {
+          //checked in
+          d: "M12 50 L188 50",
+          length: 176,
+          fill: "#FFF"
+        }
       ]
     };
-  },
-  methods: {
-    doSomething() {
-      alert("Hello!");
-    }
   },
   props: ["applicationStatus"],
   components: {

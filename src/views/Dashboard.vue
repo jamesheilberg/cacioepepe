@@ -4,7 +4,7 @@
       class="text--white white--text pt-10"
       v-if="this.user.role == 'hacker'"
     >
-      <HackerUI />
+      <HackerUI :user="user" />
     </div>
     <div
       class="darkBlue text--white white--text py-10"
@@ -51,7 +51,8 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.user;
+      // return this.$store.state.user;
+      return { role: "hacker", applicationStatus: 3 };
     }
   }
 };

@@ -19,18 +19,24 @@
           rx="18.08"
         />
         <path
-          class="cls-3"
-          d="M127.83,116s-1.26-31.09,29.34-31.09S186.5,116,186.5,116"
+          d="M104,130 C104,44 210,44 210,130"
+          stroke="#aaa"
           fill="none"
-          stroke-width="14px"
+          stroke-linecap="round"
+          stroke-width="22"
         />
       </g>
 
       <g fill="#eee">
-        <circle class="cls-4" cx="157.17" cy="157.17" r="11.5" />
-        <polygon
-          class="cls-4"
-          points="165.2 191.81 148.47 191.81 152.07 157.17 162.26 157.17 165.2 191.81"
+        <circle class="cls-4" cx="157.17" cy="157.17" r="15" />
+        <line
+          x1="157"
+          y1="157"
+          x2="157"
+          y2="195"
+          stroke-width="18"
+          stroke="#eee"
+          stroke-linecap="round"
         />
       </g>
     </g>

@@ -87,6 +87,7 @@ export default {
   props: ["applicationStatus"],
   computed: {
     darkColor() {
+      console.log("yuh yeet:", this.applicationStatus);
       return this.applicationStatus === allStages.STARTED
         ? "goldenrod"
         : "#aaa";

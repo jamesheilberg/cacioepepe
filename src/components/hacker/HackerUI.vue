@@ -112,6 +112,7 @@ export default {
     Challenges,
     Timeline
   },
+  props: ["user"],
   methods: {
     pushApplication() {
       this.$router.push("application");
@@ -174,11 +175,6 @@ export default {
   mounted() {
     if ((this.user == null) | (this.user.applicationStatus == null)) {
       this.pushApplication();
-    }
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
     }
   }
 };
