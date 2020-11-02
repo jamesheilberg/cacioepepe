@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%; background: white; color: black">
-    <div v-if="teamID" class="card">
+    <div v-if="this.user.teamID" class="card">
       <h1>{{ teamName }}</h1>
       <p>{{ description }}</p>
       <div class="flex">

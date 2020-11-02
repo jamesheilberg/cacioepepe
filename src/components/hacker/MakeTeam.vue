@@ -57,8 +57,6 @@ export default {
   methods: {
     createTeam() {
       // create a new team
-      // set user to his appropriate team
-      // update user store
       db.collection("teams")
         .add({
           teamName: this.teamName,
@@ -66,11 +64,18 @@ export default {
           teamMembers: [db.collection("users").doc(this.user.uid)],
           teamInvites: []
         })
-        .then(data => {
-          console.log(data);
+        .then(teamRef => {
+          // update user database
+          console.log(teamRef.id);
+          db.collection("users")
+            .doc(this.user.uid)
+            .update({
+              teamID: teamRef.id
+            })
+            .then(() => {
+              this.$store.dispatch("getUser");
+            });
         });
-
-      console.log(this.user);
     }
   }
 };
